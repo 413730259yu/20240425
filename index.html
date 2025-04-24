@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>滑入滑出選單</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="libraries/p5.min.js"></script>
+    <script src="libraries/p5.sound.min.js"></script>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+      }
+
+      /* 選單樣式 */
+      .menu {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        background-color: #fdf0d5;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .menu li {
+        margin: 0;
+        padding: 10px 15px;
+      }
+
+      .menu li a {
+        text-decoration: none;
+        color: #333;
+        font-weight: bold;
+      }
+
+      .menu li a:hover {
+        color: #007bff;
+      }
+
+      /* 調整 iframe 的樣式 */
+      #content-frame {
+        width: 80%; /* 設定 iframe 寬度為視窗的 80% */
+        height: 80vh; /* 設定 iframe 高度為視窗高度的 80% */
+        display: none; /* 預設隱藏 */
+        border: none; /* 移除邊框 */
+        position: fixed; /* 固定位置 */
+        top: 50%; /* 垂直置中 */
+        left: 50%; /* 水平置中 */
+        transform: translate(-50%, -50%); /* 將位置調整至正中央 */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* 添加陰影效果 */
+        background-color: white; /* 背景顏色 */
+      }
+
+      /* 讓 iframe 內的圖片等比例縮放並完整顯示 */
+      #content-frame {
+        overflow: hidden; /* 隱藏滾動條 */
+      }
+
+      #content-frame img {
+        width: 100%; /* 圖片寬度填滿 iframe */
+        height: 100%; /* 圖片高度填滿 iframe */
+        object-fit: contain; /* 等比例縮放，並確保圖片完整顯示 */
+      }
+
+      #image-container {
+        width: 80%; /* 設定寬度為視窗的 80% */
+        height: 80vh; /* 設定高度為視窗高度的 80% */
+        display: none; /* 預設隱藏 */
+        position: fixed; /* 固定位置 */
+        top: 50%; /* 垂直置中 */
+        left: 50%; /* 水平置中 */
+        transform: translate(-50%, -50%); /* 將位置調整至正中央 */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* 添加陰影效果 */
+        background-color: white; /* 背景顏色 */
+        overflow: hidden; /* 隱藏滾動條 */
+      }
+
+      #image-container img {
+        width: 100%; /* 圖片寬度填滿容器 */
+        height: 100%; /* 圖片高度填滿容器 */
+        object-fit: contain; /* 等比例縮放，並確保圖片完整顯示 */
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- 選單 -->
+    <ul class="menu">
+      <li><a href="#" onclick="hideIframe()">首頁</a></li>
+      <li><a href="#about">自我介紹</a></li>
+      <li class="dropdown">
+        <a href="#portfolio">作品集</a>
+        <ul class="submenu">
+          <li><a href="#" onclick="loadIframe('https://413730259yu.github.io/20250328/')">第一周</a></li>
+          <li><a href="#" onclick="loadIframe('https://413730259yu.github.io/20250307001/')">第二周</a></li>
+          <li><a href="#" onclick="loadIframe('https://413730259yu.github.io/20250314002/')">第三周</a></li>
+          <li><a href="#" onclick="loadIframe('https://hackmd.io/@Taitingyu/ryFnB_Q1le')">第四周</a></li>
+        </ul>
+      </li>
+      <li><a href="#" onclick="loadIframe('https://413730259yu.github.io/20250321002/')">測驗卷</a></li>
+      <li><a href="#" onclick="loadIframe('https://cfchen58.synology.me/程式設計2024/A2/week5/20250321_101316.mp4')">教學影片</a></li>
+    </ul>
+
+    <!-- iframe -->
+    <iframe id="content-frame" src="" frameborder="0" style="display: none;"></iframe>
+
+    <div id="image-container">
+      <img src="" alt="自我介紹圖片" />
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+    <script src="sketch.js"></script>
+    <script>
+      // 動態載入 iframe 網頁
+      function loadIframe(url) {
+        const iframe = document.getElementById('content-frame');
+        const imageContainer = document.getElementById('image-container');
+        imageContainer.style.display = 'none'; // 隱藏圖片容器
+        iframe.src = url;
+        iframe.style.display = 'block'; // 顯示 iframe
+      }
+
+      // 隱藏 iframe
+      function hideIframe() {
+        const iframe = document.getElementById('content-frame');
+        iframe.style.display = 'none';
+        iframe.src = '';
+      }
+
+      // 點擊「自我介紹」時顯示自我介紹圖片
+      document.querySelector('a[href="#about"]').addEventListener('click', () => {
+        const iframe = document.getElementById('content-frame');
+        const imageContainer = document.getElementById('image-container');
+        iframe.style.display = 'none'; // 隱藏 iframe
+        iframe.src = ''; // 清空 iframe 的內容
+        const img = imageContainer.querySelector('img');
+        img.src = '自我介紹.png'; // 設定圖片來源
+        imageContainer.style.display = 'block'; // 顯示圖片容器
+      });
+
+      // 點擊首頁時隱藏圖片和 iframe
+      document.querySelector('a[href="#"]').addEventListener('click', () => {
+        const iframe = document.getElementById('content-frame');
+        const imageContainer = document.getElementById('image-container');
+        iframe.style.display = 'none'; // 隱藏 iframe
+        iframe.src = ''; // 清空 iframe 的內容
+        imageContainer.style.display = 'none'; // 隱藏圖片容器
+      });
+    </script>
+  </body>
+</html>

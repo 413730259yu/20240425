@@ -1,0 +1,94 @@
+/* CSS主要設定網頁html的格式設定 */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+canvas {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0; /* 最底層 */
+}
+
+/* 選單容器 */
+.menu {
+  position: absolute;
+  top: -100px; /* 初始隱藏選單 */
+  right: 100px;
+  display: flex;
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+  background-color: rgba(142, 202, 230, 0.2);
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+  transition: top 0.5s ease;
+}
+
+/* 選單項目 */
+.menu li {
+  margin: 0 15px;
+  position: relative;
+}
+
+/* 選單連結 */
+.menu li a {
+  text-decoration: none;
+  color: #1d3557;
+  font-size: 30px;
+  font-family: "Microsoft JhengHei", Arial, sans-serif;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+/* 滑鼠移到選單項目時的效果 */
+.menu li a:hover {
+  color: #e36414;
+}
+
+/* 子選單 */
+.submenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: rgba(142, 202, 230, 0.9);
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 3;
+}
+
+.submenu li {
+  margin: 5px 0;
+}
+
+.submenu li a {
+  font-size: 20px;
+}
+
+/* 顯示子選單 */
+.menu li.dropdown:hover .submenu {
+  display: block;
+}
+
+/* 正確套用 iframe 樣式 */
+#content-frame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80%;
+  height: 80%;
+  background-color: rgba(255, 255, 255, 0.95);
+  z-index: 1;
+  border: none;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
